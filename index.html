@@ -1,0 +1,149 @@
+<htm>
+  <header>
+    <title>You haz been Hasselhoffed</title>
+    <link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
+    <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #111;
+      color: #EEE;
+      text-align: center;
+      font-size: 4vh;
+      letter-spacing: .5rem;
+      line-height: 100vh;
+      font-family: 'Bowlby One SC', sans-serif;
+      font-weight: 900;
+      width: 100vw;
+      height: 100vh;
+     }
+     #button {
+       cursor: pointer;
+     }
+     #countDownMsg {
+       display: none;
+     }
+     #countDownNbr {
+       display: none;
+       position: absolute;
+       top: 0;
+       left: 0;
+       right: 0;
+       height: 100vh;
+       line-height: 100vh;
+       font-size: 30vh;
+     }
+     #hassIsArmed {
+      display: none;
+      transition: opacity .5s;
+     }
+     #hassedMessage {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      font-size: 10vh;
+      letter-spacing: 0;
+      background: url(the_hass.jpg) no-repeat 50% 50%;
+      background-size: cover;
+      animation: rainbow .75s linear infinite;
+     }
+     @keyframes rainbow{
+       0% { color: pink; }
+       10%{ color: purple; }
+       20%{ color: blue; }
+       30%{ color: aqua; }
+       40%{ color: green; }
+       50%{ color: lime; }
+       60%{ color: yellow; }
+       70%{ color: orange; }
+       80%{ color: red; }
+       90%{ color: pink; }
+       100%{color: white; }
+    }
+    #credit {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      font-size: 10px;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      line-height: 3em;
+      font-family: sans-serif;
+      text-transform: uppercase;
+    }
+    a {
+      color: #FFA900;
+      text-decoration: none;
+    }
+    </style>
+  </header>
+  <body>
+    <div id="button">Click to Activate</div>
+    <div id="countDownNbr">10</div>
+    <div id="countDownMsg">get ready</div>
+    <div id="hassIsArmed">Armed - don't move mouse</div>
+    <div id="hassedMessage"> You haz been Hassed!!! </div>
+    <div id="credit">
+      Created by <a href="http://salmiak.design/">Salmiak</a>
+    </div>
+
+    <audio loop preload="auto" src="freedom.m4a" id="freedom"></audio>
+
+    <script>
+
+      function soundTheAlarm() {
+        document.querySelector('#hassIsArmed').style.display = 'none';
+        document.querySelector('#hassedMessage').style.display = 'block';
+        document.querySelector('#credit').style.opacity = "1";
+        document.querySelector('#freedom').play();
+      }
+
+      function armTheHass() {
+        document.querySelector('#countDownMsg').style.display = 'none';
+        document.querySelector('#countDownNbr').style.display = 'none';
+        document.querySelector('#hassIsArmed').style.display = 'block';
+        document.querySelector('body').addEventListener("mousemove", soundTheAlarm);
+        setTimeout(function() {
+          document.querySelector('#hassIsArmed').style.opacity = '0';
+          document.querySelector('#credit').style.opacity = "0";
+        }, 2000);
+      }
+
+      function countDown(count) {
+        if (count <= 0)
+          return armTheHass();
+
+        var domEl = document.querySelector('#countDownNbr')
+        domEl.textContent = count;
+        domEl.style.opacity = 1;
+        domEl.style.display = 'block';
+
+        count--;
+
+        var nbrFade = setInterval(function(){
+          domEl.style.opacity = domEl.style.opacity*0.6;
+        }, 100);
+
+        setTimeout(function() {
+          clearInterval(nbrFade);
+          countDown(count)
+        }, 1000);
+      }
+
+      window.onload = function () {
+        document.querySelector('#button').addEventListener('click', function() {
+          document.querySelector('#button').style.display  = "none";
+          document.querySelector('#countDownMsg').style.display = "block";
+          var bodyEl = document.querySelector('body')
+          if (bodyEl.requestFullscreen) {
+            bodyEl.requestFullscreen()
+          } else if (bodyEl.webkitRequestFullScreen) {
+            bodyEl.webkitRequestFullScreen()
+          }
+          countDown(3)
+        })
+      };
+    </script>
+  </body>
+</htm>
