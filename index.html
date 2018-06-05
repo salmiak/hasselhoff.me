@@ -1,4 +1,4 @@
-<htm>
+<html>
   <header>
     <title>You haz been Hasselhoffed</title>
     <link href="https://fonts.googleapis.com/css?family=Bowlby+One+SC" rel="stylesheet">
@@ -6,8 +6,9 @@
     body {
       margin: 0;
       padding: 0;
-      background: #111;
-      color: #EEE;
+      background: #111 50% 50% no-repeat;
+      background-size: cover;
+      color: rgba(128,128,128,0.6);
       text-align: center;
       font-size: 4vh;
       letter-spacing: .5rem;
@@ -16,10 +17,24 @@
       font-weight: 900;
       width: 100vw;
       height: 100vh;
-     }
-     #button {
-       cursor: pointer;
-     }
+    }
+    body > * {
+      position: relative;
+      z-index: 100;
+    }
+    #background {
+      z-index: 0;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: #000 50% 50% no-repeat;
+      background-size: cover;
+    }
+    #button {
+      cursor: pointer;
+    }
      #countDownMsg {
        display: none;
      }
@@ -43,7 +58,7 @@
       height: 100vh;
       font-size: 10vh;
       letter-spacing: 0;
-      background: url(the_hass.jpg) no-repeat 50% 50%;
+      background: url(gif1.gif) no-repeat 50% 50%;
       background-size: cover;
       animation: rainbow .75s linear infinite;
      }
@@ -79,6 +94,7 @@
     </style>
   </header>
   <body>
+    <div id="background"></div>
     <div id="button">Click to Activate</div>
     <div id="countDownNbr">10</div>
     <div id="countDownMsg">get ready</div>
@@ -86,6 +102,7 @@
     <div id="hassedMessage"> You haz been Hassed!!! </div>
     <div id="credit">
       Created by <a href="http://salmiak.design/">Salmiak</a>
+      <img src="gif1.gif" width="0" height="0" />
     </div>
 
     <audio loop preload="auto" src="freedom.m4a" id="freedom"></audio>
@@ -132,6 +149,16 @@
       }
 
       window.onload = function () {
+
+        if(window.location.search.search('gro') != -1) {
+          document.querySelector('#freedom').setAttribute('src','freedom-gro.m4a')
+        }
+
+        if(window.location.search.search('bg') != -1) {
+          var nr = Math.floor(Math.random()*5)
+          document.querySelector('#background').style['background-image'] = 'url(bg'+nr+'.png)';
+        }
+
         document.querySelector('#button').addEventListener('click', function() {
           document.querySelector('#button').style.display  = "none";
           document.querySelector('#countDownMsg').style.display = "block";
@@ -146,4 +173,4 @@
       };
     </script>
   </body>
-</htm>
+</html>
